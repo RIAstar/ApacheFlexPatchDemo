@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+               xmlns:s="library://ns.adobe.com/flex/spark"
+               xmlns:m="net.riastar.patchfx.model.*"
+               minWidth="600">
+
+    <fx:Declarations>
+        <s:ArrayList id="dp">
+            <m:Employee firstname="Maxime" lastname="Cowez">
+                <m:company>
+                    <m:Company name="Trasys"/>
+                </m:company>
+            </m:Employee>
+            <m:Employee firstname="Carol" lastname="Frampton">
+                <m:company>
+                    <m:Company name="Adobe"/>
+                </m:company>
+            </m:Employee>
+        </s:ArrayList>
+    </fx:Declarations>
+
+    <s:layout>
+        <s:VerticalLayout/>
+    </s:layout>
+
+
+    <s:Label text="Current state" fontSize="14" fontWeight="bold"/>
+    <s:RichText width="100%">
+        <s:text>
+            Column "company.name" uses 'spark.components.gridClasses.DefaultGridItemEditor'.
+            This will yield the following error when the user tries to edit the field:
+
+            [Fault] exception, information=ReferenceError: Error #1069:
+            Property company.name not found on net.riastar.patchfx.model.Employee and there is no default value.
+            at spark.components.gridClasses::GridItemEditor/set data()
+        </s:text>
+    </s:RichText>
+
+    <s:DataGrid dataProvider="{dp}" width="100%" editable="true">
+        <s:columns>
+            <s:ArrayList>
+                <s:GridColumn dataField="firstname"/>
+                <s:GridColumn dataField="lastname"/>
+                <s:GridColumn dataField="company.name" headerText="company.name"/>
+            </s:ArrayList>
+        </s:columns>
+    </s:DataGrid>
+
+
+    <s:Label text="Patched state" fontSize="14" fontWeight="bold" paddingTop="25"/>
+    <s:RichText width="100%">
+        <s:text>
+            Column "company.name" uses 'net.riastar.components.gridClasses.DefaultGridItemEditor'.
+            The nested property can now be edited properly.
+
+            'net.riastar.components.gridClasses.DefaultGridItemEditor' is an exact copy of
+            'spark.components.gridClasses.DefaultGridItemEditor' except it extends the patched 'GridItemEditor'
+        </s:text>
+    </s:RichText>
+
+    <s:DataGrid dataProvider="{dp}" width="100%" editable="true">
+        <s:columns>
+            <s:ArrayList>
+                <s:GridColumn dataField="firstname"/>
+                <s:GridColumn dataField="lastname"/>
+                <s:GridColumn dataField="company.name" headerText="company.name"
+                              itemEditor="net.riastar.components.gridClasses.DefaultGridItemEditor"/>
+            </s:ArrayList>
+        </s:columns>
+    </s:DataGrid>
+
+</s:Application>
