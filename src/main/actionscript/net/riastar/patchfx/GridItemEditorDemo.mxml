@@ -4,8 +4,16 @@
                xmlns:m="net.riastar.patchfx.model.*"
                minWidth="600">
 
+    <fx:Script>
+        <![CDATA[
+        private function myFilterFunction(employee:Employee):Boolean {
+            return true;
+        }
+        ]]>
+    </fx:Script>
+
     <fx:Declarations>
-        <s:ArrayList id="dp">
+        <s:ArrayCollection id="dp" filterFunction="myFilterFunction">
             <m:Employee firstname="Maxime" lastname="Cowez">
                 <m:company>
                     <m:Company name="Trasys"/>
@@ -16,7 +24,7 @@
                     <m:Company name="Adobe"/>
                 </m:company>
             </m:Employee>
-        </s:ArrayList>
+        </s:ArrayCollection>
     </fx:Declarations>
 
     <s:layout>
